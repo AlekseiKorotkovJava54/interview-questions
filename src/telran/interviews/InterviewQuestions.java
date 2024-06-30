@@ -31,10 +31,18 @@ private static HashMap<String, Integer> getOccurrencesMap(String[] strings) {
 	return result;
 }
 static public boolean isSum2(int [] array, int sum) {
-	//TODO returns true if a given array contains two numbers, the summing of which
-	//equals a given 'sum' value
-	//complexity O[N] only one pass over the elements
-	return false;
+	boolean res = false;
+	HashSet<Integer> set = new HashSet<Integer>();
+	int index = 0;
+	int tmp;
+	int num;
+	while (!res && index<array.length) {
+		num = array[index++];
+		tmp = sum - num;
+		if(set.contains(tmp)) res = true;
+		else set.add(num);
+	}
+	return res;
 }
 static public int getMaxWithNegativePresentation(int [] array) {
 	//TODO returns maximal positive value for which exists negative one with the same abs value
