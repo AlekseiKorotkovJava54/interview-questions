@@ -27,10 +27,12 @@ class InterviewQuestionsTests {
 	}
 	@Test
 	void maxPositiveWithNegativeTest() {
-		int[] array1 = {-200, 10, -10, 1, 2, 3, -3, 200};
+		int[] array1 = {200, 10, -10, 1, 2, 3, -3, -200};
 		int [] array2 = {-200, -200, 100, 10, 10};
+		int[] array3 = {-200, 10, -10, 1, 2, 3, -3, 200};
 		assertEquals(200, getMaxWithNegativePresentation(array1));
 		assertEquals(-1, getMaxWithNegativePresentation(array2));
+		assertEquals(200, getMaxWithNegativePresentation(array3));
 	}
 
 }
