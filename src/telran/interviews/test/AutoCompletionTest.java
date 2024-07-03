@@ -13,6 +13,7 @@ String [] words = {"ab", "ABC", "avfdr", "aV", "aVV", "aaA"};
 String [] wordsAb = {"ab", "ABC"};
 String [] wordsAv = {"aV", "avfdr", "aVV", };
 String [] wordsAa = {"aaA"};
+
 	@Test
 	void test() {
 		AutoCompletion autoCompletion = new AutoCompletion();

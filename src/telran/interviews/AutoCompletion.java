@@ -1,16 +1,19 @@
 package telran.interviews;
 
+import java.util.TreeSet;
+
 public class AutoCompletion {
- //TODO
+	
+	TreeSet<String> wordsSet;
+	
+	public AutoCompletion() {
+		wordsSet = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+	}
+	
 	public boolean addWord(String word) {
-		//TODO adds new word into auto-completion variants
-		//returns true if added, false otherwise (if a given word already exists)
-		return false;
+		return wordsSet.add(word);
 	}
 	public String [] getVariants(String prefix) {
-		//TODO
-		//returns all words beginning with a given prefix
-		//Complexity of finding the variants is O[logN]
-		return null;
+		return wordsSet.subSet(prefix, prefix + Character.MAX_VALUE).toArray(String[]::new);
 	}
 }
