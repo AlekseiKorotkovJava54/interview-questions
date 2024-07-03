@@ -4,11 +4,7 @@ import java.util.TreeSet;
 
 public class AutoCompletion {
 	
-	TreeSet<String> wordsSet;
-	
-	public AutoCompletion() {
-		wordsSet = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
-	}
+	TreeSet<String> wordsSet = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
 	
 	public boolean addWord(String word) {
 		return wordsSet.add(word);
