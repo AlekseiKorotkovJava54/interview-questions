@@ -1,47 +1,66 @@
 package telran.interviews.test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Random;
+import java.util.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import telran.interviews.MyStackInt;
 
-public class MyStackIntTest {
-	
-	MyStackInt stack = new MyStackInt();
-	Random random = new Random();
-	
-	@BeforeEach
-	void setUp() {
-		random.ints().limit(100).forEach(n -> stack.push(n));
-	}
-	
+class MyStackIntTest {
+private static final long N_ELEMENTS = 1000;
+MyStackInt stack;
+@BeforeEach
+void setUp() {
+	stack = new MyStackInt();
+}
 	@Test
-	void pushTest() {
+	void testPush() {
+		stack.push(100);
+		assertEquals(100, stack.getMaxElement());
+		stack.push(200);
+		assertEquals(200, stack.getMaxElement());
+		stack.push(200);
+		assertEquals(200, stack.getMaxElement());
+		stack.pop();
+		assertEquals(200, stack.getMaxElement());
+		
+	}
 
-	}
-	
 	@Test
-	void popTest() {
-		
+	void testPop() {
+		assertThrowsExactly(EmptyStackException.class, () -> stack.pop());
+		stack.push(100); stack.push(200);
+		assertEquals(200, stack.pop());
+		assertEquals(100, stack.getMaxElement());
 	}
-	
+
 	@Test
-	void peekTest() {
-		
+	void testPeek() {
+		assertThrowsExactly(EmptyStackException.class, () -> stack.peek());
+		stack.push(100);
+		assertEquals(100, stack.peek());
 	}
-	
+
 	@Test
-	void isEmptyTest() {
-		assertTrue(new MyStackInt().isEmpty());
+	void testIsEmpty() {
+		assertTrue(stack.isEmpty());
+		stack.push(0);
 		assertFalse(stack.isEmpty());
 	}
-	
+
 	@Test
-	void getMaxElementTest() {
-		
+	void testGetMaxElement() {
+		int[] randomAr = new Random().ints().limit(N_ELEMENTS).toArray();
+		TreeSet<Integer> treeSet = new TreeSet<>();
+		assertThrowsExactly(EmptyStackException.class, () -> stack.getMaxElement());
+		for(int num: randomAr) {
+			stack.push(num);
+			treeSet.add(num);
+		}
+		assertEquals(treeSet.last(), stack.getMaxElement());
 	}
+
 }
