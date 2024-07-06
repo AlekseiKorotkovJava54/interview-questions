@@ -1,8 +1,11 @@
 package telran.interviews;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.Map.Entry;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+
+import javax.swing.text.html.parser.Entity;
 public class InterviewQuestions {
 public static void displayOccurrences(String [] strings) {
 	HashMap<String, Integer> mapOccurrences = getOccurrencesMap(strings);
@@ -72,22 +75,28 @@ public static Map<Integer, Integer> getMapSquares(List<Integer> numbers) {
 					LinkedHashMap::new));
 	return res;
 }
+
 public static boolean isAnagram(String word, String anagram) {
 	return word.equals(anagram) ? 
 			false : 
 				word.toLowerCase().chars().mapToObj(c -> (char) c).collect(Collectors.toSet())
 				.equals(anagram.toLowerCase().chars().mapToObj(c -> (char) c).collect(Collectors.toSet()));
 }
-public static List<DateRole> assignRoleDates(List<DateRole> rolesHistory,
-		List<LocalDate> dates) {
-	//TODO
-	//create List<DateRole> with roles matching with the given dates
-	//most effective data structure
-	return null;
+
+public static List<DateRole> assignRoleDates(List<DateRole> rolesHistory, List<LocalDate> dates) {
+	TreeMap<LocalDate, String> rolesHistoryMap = rolesHistory.stream()
+			.collect(Collectors.toMap(DateRole::date, DateRole::role,(existing, replacement) -> existing, TreeMap::new));
+	
+	return dates.stream().map(d -> {
+		Entry<LocalDate, String> role = rolesHistoryMap.floorEntry(d);
+		return role == null ? new DateRole(d, null) : new DateRole(d, role.getValue()) ;
+	}).collect(Collectors.toList());
 }
+
 public static void displayDigitsStatistics() {
 	new Random().ints(1000000, 0, 10).boxed().collect(Collectors.groupingBy(i -> i, Collectors.counting()))
 	.entrySet().stream().sorted((e1, e2) -> Long.compare(e2.getValue(), e1.getValue()))
 	.forEachOrdered(e -> System.out.printf("%d -> %d\n", e.getKey(), e.getValue()));
 ;}
+
 }
