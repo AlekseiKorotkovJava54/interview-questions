@@ -1,6 +1,7 @@
 package telran.interviews;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 public class InterviewQuestions {
 public static void displayOccurrences(String [] strings) {
@@ -21,7 +22,6 @@ private static void displayOccurrences(TreeMap<Integer, TreeSet<String>> treeMap
 	treeMapOccurrences.entrySet().forEach(e -> {
 		e.getValue().forEach(str -> System.out.printf("%s => %d\n",str, e.getKey()));
 	});
-	
 }
 
 private static TreeMap<Integer, TreeSet<String>> getTreeMapOccurrences(HashMap<String, Integer> mapOccurrences) {
@@ -73,11 +73,10 @@ public static Map<Integer, Integer> getMapSquares(List<Integer> numbers) {
 	return res;
 }
 public static boolean isAnagram(String word, String anagram) {
-	//TODO
-	//returns true if "anagram" string contains all
-	// letters from "word" in another order (case sensitive)
-	//O[N] (sorting is disallowed)
-	return false;
+	return word.equals(anagram) ? 
+			false : 
+				word.toLowerCase().chars().mapToObj(c -> (char) c).collect(Collectors.toSet())
+				.equals(anagram.toLowerCase().chars().mapToObj(c -> (char) c).collect(Collectors.toSet()));
 }
 public static List<DateRole> assignRoleDates(List<DateRole> rolesHistory,
 		List<LocalDate> dates) {
@@ -87,15 +86,8 @@ public static List<DateRole> assignRoleDates(List<DateRole> rolesHistory,
 	return null;
 }
 public static void displayDigitsStatistics() {
-	//TODO
-	//display out statistics in the following format (example)
-	/* 1 -> <count of occurrences>
-	 * 2 -> .....
-	 * .........
-	 */
-	//sorted by counts of occurrences in the descending order
-	//takes 1000000 random numbers in range [0-Integer.MAX_VALUE)
-	//one pipeline with no additional yours methods
-	
-}
+	new Random().ints(1000000, 0, 10).boxed().collect(Collectors.groupingBy(i -> i, Collectors.counting()))
+	.entrySet().stream().sorted((e1, e2) -> Long.compare(e2.getValue(), e1.getValue()))
+	.forEachOrdered(e -> System.out.printf("%d -> %d\n", e.getKey(), e.getValue()));
+;}
 }
