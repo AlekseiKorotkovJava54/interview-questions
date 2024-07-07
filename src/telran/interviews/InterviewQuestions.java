@@ -77,11 +77,20 @@ public static Map<Integer, Integer> getMapSquares(List<Integer> numbers) {
 }
 
 public static boolean isAnagram(String word, String anagram) {
-	return word.equals(anagram) ? 
-			false : 
-				word.toLowerCase().chars().mapToObj(c -> (char) c).collect(Collectors.toSet())
-				.equals(anagram.toLowerCase().chars().mapToObj(c -> (char) c).collect(Collectors.toSet()));
-}
+	boolean res;
+	if(word.equals(anagram) || word.length() != anagram.length()) {
+		res = false;
+	}
+	else {
+		Map<Character, Long> wordMap = word.toLowerCase().chars().mapToObj(c -> (char) c)
+				.collect(Collectors.groupingBy(c -> c, Collectors.counting()));
+		
+		anagram.toLowerCase().chars().mapToObj(c -> (char) c).forEach(c -> wordMap.computeIfPresent(c, (k, v) -> v > 1 ? v - 1 : null));
+		
+		res = wordMap.isEmpty();
+	}
+	return res;
+}		
 
 public static List<DateRole> assignRoleDates(List<DateRole> rolesHistory, List<LocalDate> dates) {
 	TreeMap<LocalDate, String> rolesHistoryMap = rolesHistory.stream()
