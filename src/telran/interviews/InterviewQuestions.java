@@ -94,7 +94,8 @@ public static List<DateRole> assignRoleDates(List<DateRole> rolesHistory, List<L
 }
 
 public static void displayDigitsStatistics() {
-	new Random().ints(1000000, 0, 10).boxed().collect(Collectors.groupingBy(i -> i, Collectors.counting()))
+	new Random().ints(1000000, 0, Integer.MAX_VALUE).flatMap(i -> Integer.toString(i).chars()).map(c -> c - '0').boxed()
+	.collect(Collectors.groupingBy(i -> i, Collectors.counting()))
 	.entrySet().stream().sorted((e1, e2) -> Long.compare(e2.getValue(), e1.getValue()))
 	.forEachOrdered(e -> System.out.printf("%d -> %d\n", e.getKey(), e.getValue()));
 ;}
